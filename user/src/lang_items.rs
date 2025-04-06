@@ -1,17 +1,14 @@
-use super::exit;
-
+// os/src/lang_items.rs
 #[panic_handler]
-fn panic_handler(panic_info: &core::panic::PanicInfo) -> ! {
-    let err = panic_info.message().unwrap();
-    if let Some(location) = panic_info.location() {
-        println!(
-            "Panicked at {}:{}, {}",
+fn panic(info: &core::panic::PanicInfo) -> ! {
+    if let Some(location) = info.location() {
+        println!("Panicked at {}:{} {}",
             location.file(),
             location.line(),
-            err
+            info.message()
         );
     } else {
-        println!("Panicked: {}", err);
+        println!("Panicked: {}", info.message());
     }
-    exit(-1);
+    loop {}
 }

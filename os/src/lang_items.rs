@@ -1,12 +1,21 @@
+// os/src/lang_items.rs
 use core::panic::PanicInfo;
+use crate::println;
 use crate::sbi::shutdown;
+use crate::stack_btrace::btrace;
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     if let Some(location) = info.location() {
-        println!("[kernel] Panicked at {}:{} {}", location.file(), location.line(), info.message().unwrap());
+        println!("Panicked at {}:{} {}",
+            location.file(),
+            location.line(),
+            info.message()
+            
+        );
     } else {
-        println!("[kernel] Panicked: {}", info.message().unwrap());
+        println!("Panicked: {}", info.message());
     }
-    shutdown()
+    btrace(); // ch2-lab feature
+    shutdown(true)
 }
