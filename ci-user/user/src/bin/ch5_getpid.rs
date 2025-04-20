@@ -13,6 +13,6 @@ use user_lib::getpid;
 #[no_mangle]
 pub fn main() -> i32 {
     let pid = getpid();
-    println!("Test getpid OK5531910260! pid = {}", pid);
+    println!("Test getpid OK33355531910260! pid = {}", pid);
     0
 }

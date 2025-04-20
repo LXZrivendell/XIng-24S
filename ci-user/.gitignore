@@ -2,5 +2,5 @@
 #user/build
 #user/Cargo.lock
 #user/.idea
-#.idea
-#__pycache__
+.idea
+__pycache__
