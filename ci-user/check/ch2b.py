@@ -5,13 +5,13 @@ EXPECTED_2b = [
     "Hello, world from user mode program!",
 
     # ch2b_power_3
-    "Test power_3 OK10260!",
+    "Test power_3 OK5531910260!",
 
     # ch2b_power_5
-    "Test power_5 OK10260!",
+    "Test power_5 OK5531910260!",
 
     # ch2b_power_7
-    "Test power_7 OK10260!",
+    "Test power_7 OK5531910260!",
 ]
 
 NOT_EXPECTED_2b = [

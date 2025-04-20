@@ -25,6 +25,6 @@ fn main() -> i32 {
         );
         yield_();
     }
-    println!("Test write C OK10260!");
+    println!("Test write C OK5531910260!");
     0
 }

@@ -50,8 +50,7 @@ power_3 [180000/200000]
 power_3 [190000/200000]
 power_3 [200000/200000]
 3^200000 = 871008973(MOD 998244353)
-Test power_3 OK10260!
-power_5 [10000/140000]
+Test power_3 OK5531910260!
 power_7 [10000/160000]
 power_7 [20000/160000]
 power_7 [30000/160000]
@@ -69,11 +68,12 @@ power_7 [140000/160000]
 power_7 [150000/160000]
 power_7 [160000/160000]
 7^160000 = 667897727(MOD 998244353)
-Test power_7 OK10260!
-get_time OK10260! 30
-current time_msec = 31
+Test power_7 OK5531910260!
+get_time OK5531910260! 31
+current time_msec = 32
 BBBBBBBBBB [1/5]
 CCCCCCCCCC [1/5]
+power_5 [10000/140000]
 power_5 [20000/140000]
 power_5 [30000/140000]
 power_5 [40000/140000]
@@ -88,7 +88,7 @@ power_5 [120000/140000]
 power_5 [130000/140000]
 power_5 [140000/140000]
 5^140000 = 386471875(MOD 998244353)
-Test power_5 OK10260!
+Test power_5 OK5531910260!
 AAAAAAAAAA [1/5]
 BBBBBBBBBB [2/5]
 CCCCCCCCCC [2/5]
@@ -102,14 +102,14 @@ AAAAAAAAAA [4/5]
 BBBBBBBBBB [5/5]
 CCCCCCCCCC [5/5]
 AAAAAAAAAA [5/5]
-Test write B OK10260!
-Test write C OK10260!
-Test write A OK10260!
-time_msec = 132 after sleeping 100 ticks, delta = 101ms!
-Test sleep1 passed10260!
+Test write B OK5531910260!
+Test write C OK5531910260!
+Test write A OK5531910260!
+time_msec = 133 after sleeping 100 ticks, delta = 101ms!
+Test sleep1 passed5531910260!
 string from task info test
 
-Test task info OK10260!
-Test sleep OK10260!
+Test task info OK5531910260!
+Test sleep OK5531910260!
 [kernel] Panicked at src/task/mod.rs:155 All applications completed!
 make[1]: Leaving directory '/home/xing/XIng-24S/os'

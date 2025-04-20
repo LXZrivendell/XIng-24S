@@ -1,5 +1,5 @@
 target/*
 .vscode/
-build/
+# build/
 .idea/
-Cargo.lock
+# Cargo.lock

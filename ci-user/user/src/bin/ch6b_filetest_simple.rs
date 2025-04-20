@@ -33,6 +33,6 @@ pub fn main() -> i32 {
         test_str,
         core::str::from_utf8(&buffer[..read_len]).unwrap(),
     );
-    println!("file_test passed10260!");
+    println!("file_test passed5531910260!");
     0
 }

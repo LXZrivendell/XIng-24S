@@ -7,7 +7,7 @@ extern crate user_lib;
 use user_lib::{mmap, munmap};
 
 /*
-理想结果：输出 Test 04_6 ummap2 OK10260!
+理想结果：输出 Test 04_6 ummap2 OK5531910260!
 */
 
 #[no_mangle]
@@ -18,6 +18,6 @@ fn main() -> i32 {
     assert_eq!(0, mmap(start, len, prot));
     assert_eq!(munmap(start, len + 1), -1);
     assert_eq!(munmap(start + 1, len - 1), -1);
-    println!("Test 04_6 ummap2 OK10260!");
+    println!("Test 04_6 ummap2 OK5531910260!");
     0
 }

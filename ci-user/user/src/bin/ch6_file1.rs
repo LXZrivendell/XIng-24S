@@ -5,7 +5,7 @@
 extern crate user_lib;
 use user_lib::{close, fstat, open, OpenFlags, Stat, StatMode};
 
-/// 测试 fstat，输出　Test fstat OK10260! 就算正确。
+/// 测试 fstat，输出　Test fstat OK5531910260! 就算正确。
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -21,6 +21,6 @@ pub fn main() -> i32 {
     close(fd);
     // unlink(fname);
     // It's recommended to rebuild the disk image. This program will not clean the file "fname1".
-    println!("Test fstat OK10260!");
+    println!("Test fstat OK5531910260!");
     0
 }
