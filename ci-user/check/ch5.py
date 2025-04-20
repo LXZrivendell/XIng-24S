@@ -4,19 +4,19 @@ from ch4 import EXPECTED_4
 
 EXPECTED_5 = EXPECTED_4 + [
     # ch5_spawn0
-    "Test spawn0 OK11958!",
+    "Test spawn0 OK3050!",
 
     # ch5_spawn1
-    "Test wait OK11958!",
-    "Test waitpid OK11958!",
+    "Test wait OK3050!",
+    "Test waitpid OK3050!",
 
     # ch5_setprio
-    "Test set_priority OK11958!",
+    "Test set_priority OK3050!",
 ]
 
 EXPECTED_5 = list(set(EXPECTED_5) - set([
     "string from task info test",
-    "Test task info OK11958!",
+    "Test task info OK3050!",
 ]))
 
 if __name__ == "__main__":

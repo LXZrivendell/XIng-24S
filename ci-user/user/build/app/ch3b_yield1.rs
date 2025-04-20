@@ -25,6 +25,6 @@ fn main() -> i32 {
         );
         yield_();
     }
-    println!("Test write B OK11958!");
+    println!("Test write B OK3050!");
     0
 }

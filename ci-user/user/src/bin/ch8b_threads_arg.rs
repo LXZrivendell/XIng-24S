@@ -40,6 +40,6 @@ pub fn main() -> i32 {
         println!("thread#{} exited with code {}", tid, exit_code);
     }
     println!("main thread exited.");
-    println!("threads with arg test passed11958!");
+    println!("threads with arg test passed3050!");
     0
 }

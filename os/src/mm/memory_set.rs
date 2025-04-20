@@ -1,4 +1,5 @@
 //! Implementation of [`MapArea`] and [`MemorySet`].
+use core::borrow::BorrowMut;
 
 use super::{frame_alloc, FrameTracker};
 use super::{PTEFlags, PageTable, PageTableEntry};
@@ -246,6 +247,12 @@ impl MemorySet {
         } else {
             false
         }
+    }
+    
+    /// 
+    #[allow(unused)]
+    pub fn get_page_table(&mut self) -> &mut PageTable {
+        self.page_table.borrow_mut()
     }
 
     /// append the area to new_end

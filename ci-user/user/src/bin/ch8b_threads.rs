@@ -57,6 +57,6 @@ pub fn main() -> i32 {
         assert_eq!(*tid, exit_code);
     }
     println!("main thread exited.");
-    println!("threads test passed11958!");
+    println!("threads test passed3050!");
     0
 }

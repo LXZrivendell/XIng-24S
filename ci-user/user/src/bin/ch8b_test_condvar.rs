@@ -54,6 +54,6 @@ pub fn main() -> i32 {
     for thread in threads.iter() {
         waittid(*thread as usize);
     }
-    println!("test_condvar passed11958!");
+    println!("test_condvar passed3050!");
     0
 }

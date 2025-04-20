@@ -161,7 +161,7 @@ fn run(f: fn()) -> bool {
         if exit_code != 0 {
             println!("FAILED!");
         } else {
-            println!("OK11958!");
+            println!("OK3050!");
         }
         exit_code == 0
     }

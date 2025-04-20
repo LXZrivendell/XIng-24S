@@ -5,7 +5,7 @@
 extern crate user_lib;
 use user_lib::{close, open, unlink, write, OpenFlags};
 
-/// 测试大量 open/unlink，输出 Test mass open/unlink OK11958! 就算正确。
+/// 测试大量 open/unlink，输出 Test mass open/unlink OK3050! 就算正确。
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -26,6 +26,6 @@ pub fn main() -> i32 {
         assert!(fd < 0);
         println!("test iteration {}", i)
     }
-    println!("Test mass open/unlink OK11958!");
+    println!("Test mass open/unlink OK3050!");
     0
 }

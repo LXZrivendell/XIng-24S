@@ -3,13 +3,13 @@ from ch2b import NOT_EXPECTED_2b
 
 EXPECTED_3b = [
     # ch3b_yield0
-    "Test write A OK11958!",
+    "Test write A OK3050!",
 
     # ch3b_yield1
-    "Test write B OK11958!",
+    "Test write B OK3050!",
 
     # ch3b_yield2
-    "Test write C OK11958!",
+    "Test write C OK3050!",
 ]
 
 if __name__ == "__main__":

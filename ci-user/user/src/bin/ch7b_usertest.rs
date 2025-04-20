@@ -49,7 +49,7 @@ pub fn main() -> i32 {
             test, pids[i], xstate
         );
     }
-    println!("Basic usertests passed11958!");
+    println!("Basic usertests passed3050!");
     0
 }
 

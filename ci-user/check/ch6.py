@@ -4,19 +4,19 @@ from ch5 import EXPECTED_5, NOT_EXPECTED_4b
 
 EXPECTED_6 = list(set(EXPECTED_5 + EXPECTED_6b + [
     # ch6_file0
-    "Test file0 OK11958!",
+    "Test file0 OK3050!",
 
     # ch6_file1
-    "Test fstat OK11958!",
+    "Test fstat OK3050!",
 
     # ch6_file2
-    "Test link OK11958!",
+    "Test link OK3050!",
 
     # ch6_file3
-    "Test mass open/unlink OK11958!",
+    "Test mass open/unlink OK3050!",
 ]))
 
-EXPECTED_6 = list(set(EXPECTED_6) - set(["Test set_priority OK11958!"]))
+EXPECTED_6 = list(set(EXPECTED_6) - set(["Test set_priority OK3050!"]))
 
 if __name__ == "__main__":
     base.test(EXPECTED_6, NOT_EXPECTED_4b)
