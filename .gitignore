@@ -1,5 +1,7 @@
 .*/*
 !user/.*
+!ci-user/.*
+!ci-user/user/.*
 !.github/*
 !.vscode/settings.json
 .idea
