@@ -1,4 +1,4 @@
-# rCore-Tutorial-Code-2024S
+# XIng-24S
 
 ### Code
 - [Soure Code of labs for 2024S](https://github.com/LearningOS/rCore-Tutorial-Code-2024S)
@@ -28,22 +28,19 @@
 
 ```bash
 # setup build&run environment first
-$ git clone https://github.com/LearningOS/rCore-Tutorial-Code-2024S.git
-$ cd rCore-Tutorial-Code-2024S
+$ cd XIng-24S
 $ git clone https://github.com/LearningOS/rCore-Tutorial-Test-2024S.git user
 $ git checkout ch$ID
 $ cd os
 # run OS in ch$ID
-$ make run
+$ make run (TEST=$ID) LOG=INFO BAESE=0
 ```
 Notice: $ID is from [1-9]
 
 ### Grading
 
 ```bash
-# setup build&run environment first
-$ git clone https://github.com/LearningOS/rCore-Tutorial-Code-2024S.git
-$ cd rCore-Tutorial-Code-2024S
+$ cd XIng-24S
 $ rm -rf ci-user
 $ git clone https://github.com/LearningOS/rCore-Tutorial-Checker-2024S.git ci-user
 $ git clone https://github.com/LearningOS/rCore-Tutorial-Test-2024S.git ci-user/user
