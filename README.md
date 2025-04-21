@@ -29,7 +29,7 @@
 ```bash
 # setup build&run environment first
 git clone https://github.com/LearningOS/rCore-Tutorial-Code-2024S.git
-cd rCore-Tutorial-Code-*2024S
+cd rCore-Tutorial-Code-2024S
 git clone https://github.com/LearningOS/rCore-Tutorial-Test-2024S.git user
 cd os
 git checkout ch$ID
