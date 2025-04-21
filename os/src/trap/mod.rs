@@ -56,6 +56,7 @@ pub fn enable_timer_interrupt() {
 /// trap handler
 #[no_mangle]
 pub fn trap_handler() -> ! {
+    //user_time_start(); // 进入内核态
     set_kernel_trap_entry();
     let cx = current_trap_cx();
     let scause = scause::read(); // get trap cause
@@ -91,6 +92,7 @@ pub fn trap_handler() -> ! {
             );
         }
     }
+    //user_time_end(); // 返回用户态前
     //println!("before trap_return");
     trap_return();
 }

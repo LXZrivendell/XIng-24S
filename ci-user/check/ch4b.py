@@ -4,7 +4,7 @@ from ch3b import NOT_EXPECTED_2b, EXPECTED_3b
 
 EXPECTED_4b = EXPECTED_3b + [
     # ch4b_sbrk
-    "Test sbrk almost OK3050!",
+    "Test sbrk almost OK1187656213652495969263464193050!",
 ]
 
 NOT_EXPECTED_4b = NOT_EXPECTED_2b+ [

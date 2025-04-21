@@ -40,6 +40,6 @@ pub fn main() -> i32 {
     for thread in threads.iter() {
         waittid(*thread as usize);
     }
-    println!("sync_sem passed3050!");
+    println!("sync_sem passed1187656213652495969263464193050!");
     0
 }

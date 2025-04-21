@@ -3,7 +3,7 @@ from ch5b import EXPECTED_5b, NOT_EXPECTED_4b
 
 EXPECTED_6b = EXPECTED_5b + [
     # ch6b_filetest_simple.rs
-    "file_test passed3050!",
+    "file_test passed1187656213652495969263464193050!",
 ]
 
 if __name__ == '__main__':

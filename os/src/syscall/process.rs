@@ -101,6 +101,10 @@ pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
         time: get_current_task_time_cost(),
     };
     // println!("[kernel]: time {} syscall_time {}", task_info.time, task_info.syscall_times[super::SYSCALL_GET_TIME]);
+    println!(
+        "[kernel] sys_task_info: time = {} us, syscall_times[{}] = {}",
+        task_info.time, super::SYSCALL_GET_TIME, task_info.syscall_times[super::SYSCALL_GET_TIME]
+    );
     let src_ptr = task_info as *const TaskInfo;
     for (idx, dst) in dst_vec.into_iter().enumerate() {
         let unit_len = dst.len();

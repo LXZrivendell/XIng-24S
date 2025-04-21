@@ -92,6 +92,16 @@ lazy_static! {
 }
 
 impl TaskManager {
+
+
+    /// ch3, record syscall times
+    fn record_syscall_times(&self, syscall_id: usize) {
+        let mut inner = self.inner.exclusive_access();
+        let current = inner.current_task;
+        inner.tasks[current].syscall_times[syscall_id] += 1;
+    }
+
+
     /// Run the first task in task list.
     ///
     /// Generally, the first task in task list is an idle task (we call it zero process later).
@@ -265,7 +275,7 @@ pub fn get_current_task_time_cost() -> usize {
     let inner = TASK_MANAGER.inner.exclusive_access();
     let current = inner.current_task;
     let task_block = inner.tasks.get(current).unwrap();
-    task_block.kernel_time + task_block.user_time
+    (task_block.kernel_time + task_block.user_time) * 1000 // ms -> us
 }
 ///
 pub fn get_current_task_syscall_times() -> [u32; MAX_SYSCALL_NUM] {
@@ -311,4 +321,9 @@ pub fn unmap_consecutive_area(start: usize, len: usize) -> isize {
         }
     }
     0
+}
+
+/// Record the syscall times of the current 'Running' task.
+pub fn record_syscall_times(syscall_id: usize) {
+    TASK_MANAGER.record_syscall_times(syscall_id);
 }

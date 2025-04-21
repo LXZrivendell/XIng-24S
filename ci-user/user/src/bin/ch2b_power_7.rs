@@ -23,6 +23,6 @@ fn main() -> i32 {
         }
     }
     println!("{}^{} = {}(MOD {})", p, iter, s[cur], m);
-    println!("Test power_7 OK3050!");
+    println!("Test power_7 OK1187656213652495969263464193050!");
     0
 }
