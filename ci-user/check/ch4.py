@@ -4,16 +4,16 @@ from ch2b import NOT_EXPECTED_2b
 
 EXPECTED_4 = EXPECTED_3 + [
     # ch4_mmap0
-    "Test 04_1 OK33355531910260!",
+    "Test 04_1 OK2852733355531910260!",
 
     # ch4_mmap3
-    "Test 04_4 test OK33355531910260!",
+    "Test 04_4 test OK2852733355531910260!",
 
     # ch4_unmap
-    "Test 04_5 ummap OK33355531910260!",
+    "Test 04_5 ummap OK2852733355531910260!",
 
     # ch4_unmap2
-    "Test 04_6 ummap2 OK33355531910260!",
+    "Test 04_6 ummap2 OK2852733355531910260!",
 ]
 
 NOT_EXPECTED_4 = NOT_EXPECTED_2b + [
