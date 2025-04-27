@@ -23,10 +23,10 @@ impl RecycleAllocator {
     }
     pub fn alloc(&mut self) -> usize {
         if let Some(id) = self.recycled.pop() {
-            id
+            PidHandle(pid)
         } else {
             self.current += 1;
-            self.current - 1
+            PidHandle(self.current - 1)
         }
     }
     pub fn dealloc(&mut self, id: usize) {
@@ -36,7 +36,7 @@ impl RecycleAllocator {
             "id {} has been deallocated!",
             id
         );
-        self.recycled.push(id);
+        self.recycled.push(pid);
     }
 }
 

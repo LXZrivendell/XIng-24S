@@ -17,7 +17,13 @@ mod context;
 use crate::config::{TRAMPOLINE, TRAP_CONTEXT_BASE};
 use crate::syscall::syscall;
 use crate::task::{
-    current_trap_cx, current_user_token, exit_current_and_run_next, suspend_current_and_run_next,
+    current_trap_cx, 
+    current_user_token, 
+    exit_current_and_run_next, 
+    suspend_current_and_run_next,
+    user_time_start,
+    user_time_end,
+    update_task_syscall_times,
 };
 use crate::timer::set_next_trigger;
 use core::arch::{asm, global_asm};
@@ -56,6 +62,7 @@ pub fn enable_timer_interrupt() {
 /// trap handler
 #[no_mangle]
 pub fn trap_handler() -> ! {
+    user_time_start(); //* ch3-pro2
     set_kernel_trap_entry();
     let scause = scause::read();
     let stval = stval::read();
@@ -104,6 +111,7 @@ pub fn trap_handler() -> ! {
         }
     }
     //println!("before trap_return");
+    user_time_end(); //* ch3-pro2
     trap_return();
 }
 

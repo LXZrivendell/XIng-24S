@@ -9,6 +9,8 @@ use alloc::sync::{Arc, Weak};
 use alloc::vec::Vec;
 use core::cell::RefMut;
 
+
+use crate::timer::get_time_ms;
 /// Task control block structure
 ///
 /// Directly save the contents that will not change during running
@@ -21,7 +23,7 @@ pub struct TaskControlBlock {
     pub kernel_stack: KernelStack,
 
     /// Mutable
-    inner: UPSafeCell<TaskControlBlockInner>,
+    pub inner: UPSafeCell<TaskControlBlockInner>,
 }
 
 impl TaskControlBlock {
@@ -50,6 +52,11 @@ pub struct TaskControlBlockInner {
     /// Maintain the execution status of the current process
     pub task_status: TaskStatus,
 
+    pub syscall_times: [u32; MAX_SYSCALL_NUM],
+    pub user_time: usize,
+    pub kernel_time: usize,
+    pub checkpoint: usize, // record time point
+
     /// Application address space
     pub memory_set: MemorySet,
 
@@ -68,6 +75,9 @@ pub struct TaskControlBlockInner {
 
     /// Program break
     pub program_brk: usize,
+
+    pub stride: u64,
+    pub priority: u64,
 }
 
 impl TaskControlBlockInner {
@@ -84,6 +94,16 @@ impl TaskControlBlockInner {
     }
     pub fn is_zombie(&self) -> bool {
         self.get_status() == TaskStatus::Zombie
+    }
+
+    /// update checkpoint and return the diff time
+    pub fn update_checkpoint(&mut self) -> usize {
+        let prev_point = self.checkpoint;
+        self.checkpoint = get_time_ms();
+        return self.checkpoint - prev_point;
+    }
+    pub fn set_priority(&mut self, level: u64) {
+        self.priority = level;
     }
 }
 
