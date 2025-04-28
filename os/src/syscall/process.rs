@@ -29,6 +29,12 @@ use crate::{
         create_new_map_area,
         unmap_consecutive_area,
         pid_alloc,
+        KernelStack,
+        TaskControlBlock,
+        TaskControlBlockInner,
+        TaskContext,
+        TrapContext,
+        trap_handler,
     },
     timer::{get_time_us, get_time_ms},
 };

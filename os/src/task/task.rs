@@ -1,4 +1,5 @@
 //! Types related to task management & Functions for completely changing TCB
+use crate::task::MAX_SYSCALL_NUM;
 use super::TaskContext;
 use super::{kstack_alloc, pid_alloc, KernelStack, PidHandle};
 use crate::config::TRAP_CONTEXT_BASE;
