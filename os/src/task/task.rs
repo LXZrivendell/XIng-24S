@@ -38,7 +38,7 @@ impl TaskControlBlock {
         inner.memory_set.token()
     }
 }
-
+///
 pub struct TaskControlBlockInner {
     /// The physical page number of the frame where the trap context is placed
     pub trap_cx_ppn: PhysPageNum,
@@ -52,10 +52,13 @@ pub struct TaskControlBlockInner {
 
     /// Maintain the execution status of the current process
     pub task_status: TaskStatus,
-
+    ///
     pub syscall_times: [u32; MAX_SYSCALL_NUM],
+    ///
     pub user_time: usize,
+    ///
     pub kernel_time: usize,
+    ///
     pub checkpoint: usize, // record time point
 
     /// Application address space
@@ -76,8 +79,9 @@ pub struct TaskControlBlockInner {
 
     /// Program break
     pub program_brk: usize,
-
+    ///
     pub stride: u64,
+    ///
     pub priority: u64,
 }
 
@@ -90,9 +94,11 @@ impl TaskControlBlockInner {
     pub fn get_user_token(&self) -> usize {
         self.memory_set.token()
     }
-    fn get_status(&self) -> TaskStatus {
+    ///
+    pub fn get_status(&self) -> TaskStatus {
         self.task_status
     }
+    ///
     pub fn is_zombie(&self) -> bool {
         self.get_status() == TaskStatus::Zombie
     }
@@ -103,6 +109,7 @@ impl TaskControlBlockInner {
         self.checkpoint = get_time_ms();
         return self.checkpoint - prev_point;
     }
+    ///
     pub fn set_priority(&mut self, level: u64) {
         self.priority = level;
     }
@@ -139,6 +146,12 @@ impl TaskControlBlock {
                     exit_code: 0,
                     heap_bottom: user_sp,
                     program_brk: user_sp,
+                    syscall_times: [0; MAX_SYSCALL_NUM], // 初始化系统调用计数
+                    user_time: 0, // 初始化用户态时间
+                    kernel_time: 0, // 初始化内核态时间
+                    checkpoint: crate::timer::get_time_ms(), // 初始化检查点为当前时间
+                    stride: 0, // 初始化步幅（调度相关）
+                    priority: 1, // 默认优先级（可根据需要调整）
                 })
             },
         };
@@ -212,6 +225,12 @@ impl TaskControlBlock {
                     exit_code: 0,
                     heap_bottom: parent_inner.heap_bottom,
                     program_brk: parent_inner.program_brk,
+                    syscall_times: parent_inner.syscall_times, // 复制父进程的系统调用计数
+                    user_time: parent_inner.user_time, // 复制父进程用户态时间
+                    kernel_time: parent_inner.kernel_time, // 复制父进程内核态时间
+                    checkpoint: parent_inner.checkpoint, // 复制父进程检查点
+                    stride: parent_inner.stride, // 复制父进程步幅
+                    priority: parent_inner.priority, // 复制父进程优先级
                 })
             },
         });

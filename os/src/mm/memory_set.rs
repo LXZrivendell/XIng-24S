@@ -37,6 +37,17 @@ pub struct MemorySet {
 }
 
 impl MemorySet {
+
+    /// Get a reference to the page table
+    pub fn get_page_table(&self) -> &PageTable {
+        &self.page_table
+    }
+
+    /// Get a mutable reference to the page table
+    pub fn get_page_table_mut(&mut self) -> &mut PageTable {
+        &mut self.page_table
+    }
+
     /// Create a new empty `MemorySet`.
     pub fn new_bare() -> Self {
         Self {

@@ -23,7 +23,6 @@ use crate::task::{
     suspend_current_and_run_next,
     user_time_start,
     user_time_end,
-    update_task_syscall_times,
 };
 use crate::timer::set_next_trigger;
 use core::arch::{asm, global_asm};

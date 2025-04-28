@@ -14,7 +14,7 @@
 //! Be careful when you see `__switch` ASM function in `switch.S`. Control flow around this function
 //! might not be what you expect.
 mod context;
-mod pid;
+mod id;
 mod manager;
 mod processor;
 mod switch;
@@ -24,7 +24,7 @@ mod task;
 use crate::loader::get_app_data_by_name;
 use alloc::sync::Arc;
 use lazy_static::*;
-pub use pid::{kstack_alloc, pid_alloc, KernelStack, PidHandle};
+pub use id::{kstack_alloc, pid_alloc, KernelStack, PidHandle};
 pub use manager::{fetch_task, add_task, TaskManager};
 use switch::__switch;
 pub use task::{TaskControlBlock, TaskControlBlockInner, TaskStatus};
@@ -36,7 +36,7 @@ pub use processor::{
     Processor,
 };
 use crate::config::MAX_SYSCALL_NUM;
-use crate::mm::{VirtAddr, VirtPageNum, VPNRange, MapPermission, PageTableEntry};
+use crate::mm::{VirtAddr, VirtPageNum, address::VPNRange, MapPermission, PageTableEntry};
 
 /// Suspend the current 'Running' task and run the next task in task list.
 pub fn suspend_current_and_run_next() {
@@ -121,13 +121,13 @@ pub fn add_initproc() {
 }
 
 
-//* ch3-pro2
+///* ch3-pro2
 pub fn user_time_start() {
     let task = current_task().unwrap();
     let mut task_inner = task.inner_exclusive_access();
     task_inner.kernel_time += task_inner.update_checkpoint();
 }
-
+///
 pub fn user_time_end() {
     let task = current_task().unwrap();
     let mut task_inner = task.inner_exclusive_access();
@@ -138,43 +138,44 @@ pub fn user_time_end() {
 // TaskControlBlock in chapter4 contains 'MemorySet' and other fields
 // which cannot derive 'Clone' and 'Copy' traits. Therefore, we need to
 // split the variables into separate parts
+///
 pub fn get_current_task_status() -> TaskStatus {
     let task = current_task().unwrap();
     let task_inner = task.inner_exclusive_access();
     task_inner.get_status()
 }
-
+///
 pub fn get_current_task_time_cost() -> usize {
     let task = current_task().unwrap();
     let task_inner = task.inner_exclusive_access();
     task_inner.user_time + task_inner.kernel_time
 }
-
+///
 pub fn get_current_task_syscall_times() -> [u32; MAX_SYSCALL_NUM] {
     let task = current_task().unwrap();
     let task_inner = task.inner_exclusive_access();
     task_inner.syscall_times
 }
-
+///
 pub fn update_task_syscall_times(syscall_id: usize) {
     let task = current_task().unwrap();
     let mut task_inner = task.inner_exclusive_access();
     task_inner.syscall_times[syscall_id] += 1;
 }
 
-// //* ch4-lab2, mmap, munmap
+/// //* ch4-lab2, mmap, munmap
 pub fn get_current_task_page_table(vpn: VirtPageNum) -> Option<PageTableEntry> {
     let task = current_task().unwrap();
     let task_inner = task.inner_exclusive_access();
     task_inner.memory_set.translate(vpn)
 }
-
+///
 pub fn create_new_map_area(start_va: VirtAddr, end_va: VirtAddr, perm: MapPermission) {
     let task = current_task().unwrap();
     let mut task_inner = task.inner_exclusive_access();
     task_inner.memory_set.insert_framed_area(start_va, end_va, perm);
 }
-
+///
 pub fn unmap_consecutive_area(start: usize, len: usize) -> isize {
     let task = current_task().unwrap();
     let mut task_inner = task.inner_exclusive_access();
@@ -186,7 +187,7 @@ pub fn unmap_consecutive_area(start: usize, len: usize) -> isize {
             if !pte.is_valid() {
                 return -1;
             }
-            task_inner.memory_set.get_page_table().unmap(vpn);
+            task_inner.memory_set.get_page_table_mut().unmap(vpn);
         } else {
             // Also unmapped if no PTE found
             return -1;

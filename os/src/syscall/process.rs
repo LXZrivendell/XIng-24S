@@ -29,14 +29,13 @@ use crate::{
         create_new_map_area,
         unmap_consecutive_area,
         pid_alloc,
-        KernelStack,
         TaskControlBlock,
         TaskControlBlockInner,
         TaskContext,
-        TrapContext,
-        trap_handler,
+        kstack_alloc,
     },
     timer::{get_time_us, get_time_ms},
+    trap::{trap_handler, TrapContext},
 };
 
 #[repr(C)]
@@ -303,7 +302,8 @@ pub fn sys_spawn(path: *const u8) -> isize {
             .ppn();
         // alloc a pid and a kernel stack in kernel space
         let pid_handle = pid_alloc();
-        let kernel_stack = KernelStack::new(&pid_handle);
+        //let kernel_stack = KernelStack::new(&pid_handle);
+        let kernel_stack = kstack_alloc();
         let kernel_stack_top = kernel_stack.get_top();
         let task_control_block = Arc::new(TaskControlBlock {
             pid: pid_handle,
