@@ -6,7 +6,7 @@ extern crate user_lib;
 
 use user_lib::{close, open, read, write, OpenFlags};
 
-/// 测试文件基本读写，输出　Test file0 OK29142! 就算正确。
+/// 测试文件基本读写，输出　Test file0 OK421285257429142! 就算正确。
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -26,6 +26,6 @@ pub fn main() -> i32 {
     close(fd);
 
     assert_eq!(test_str, core::str::from_utf8(&buffer[..read_len]).unwrap(),);
-    println!("Test file0 OK29142!");
+    println!("Test file0 OK421285257429142!");
     0
 }

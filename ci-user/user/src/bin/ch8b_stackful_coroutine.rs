@@ -123,7 +123,7 @@ impl Runtime {
     ///
     /// If we find a task that's ready to be run we change the state of the current task from `Running` to `Ready`.
     /// Then we call switch which will save the current context (the old context) and load the new context
-    /// into the CPU which then resumes based on the context it was just passed29142.
+    /// into the CPU which then resumes based on the context it was just passed421285257429142.
     ///
     /// NOITCE: if we comment below `#[inline(never)]`, we can not get the corrent running result
     #[inline(never)]

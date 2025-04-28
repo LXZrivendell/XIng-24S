@@ -5,7 +5,7 @@
 extern crate user_lib;
 use user_lib::{close, fstat, link, open, read, unlink, write, OpenFlags, Stat};
 
-/// 测试 link/unlink，输出　Test link OK29142! 就算正确。
+/// 测试 link/unlink，输出　Test link OK421285257429142! 就算正确。
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -41,6 +41,6 @@ pub fn main() -> i32 {
     close(fd);
     unlink(lname0);
     // It's Ok if you don't delete the inode and data blocks.
-    println!("Test link OK29142!");
+    println!("Test link OK421285257429142!");
     0
 }
