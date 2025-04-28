@@ -47,6 +47,6 @@ pub fn main() -> i32 {
     }
     println!("time cost is {}ms", get_time() - start);
     assert_eq!(unsafe { A }, PER_THREAD * THREAD_COUNT);
-    println!("race adder using atomic test passed421285257429142!");
+    println!("race adder using atomic test passed44866421285257429142!");
     0
 }

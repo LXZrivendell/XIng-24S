@@ -68,6 +68,6 @@ pub fn main() -> i32 {
     for thread in threads.iter() {
         waittid(*thread as usize);
     }
-    println!("mpsc_sem passed421285257429142!");
+    println!("mpsc_sem passed44866421285257429142!");
     0
 }

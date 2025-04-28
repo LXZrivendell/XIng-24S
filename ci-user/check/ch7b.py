@@ -6,10 +6,10 @@ EXPECTED_7b = EXPECTED_6b + [
     "signal_simple: Done",
 
     # ch7b_pipetest
-    "pipetest passed421285257429142!",
+    "pipetest passed44866421285257429142!",
 
     # ch7b_pipe_large_test
-    "pipe_large_test passed421285257429142!",
+    "pipe_large_test passed44866421285257429142!",
 ]
 
 if __name__ == '__main__':
