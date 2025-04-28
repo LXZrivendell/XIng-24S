@@ -37,7 +37,7 @@ fn main() -> i32 {
         println!("Test sbrk failed!");
         return -1
     }
-    println!("Test sbrk almost OK1187656213652495969263464193050!");
+    println!("Test sbrk almost OK526341187656213652495969263464193050!");
     println!("now write to deallocated page, should cause page fault.");
     for pos in 0..PAGE_SIZE {
         new_page[pos] = 2;

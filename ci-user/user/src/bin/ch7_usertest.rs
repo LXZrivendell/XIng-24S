@@ -24,6 +24,6 @@ pub fn main() -> i32 {
             test, pid, xstate
         );
     }
-    println!("ch7 Usertests passed1187656213652495969263464193050!");
+    println!("ch7 Usertests passed526341187656213652495969263464193050!");
     0
 }

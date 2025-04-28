@@ -104,6 +104,6 @@ pub fn main() -> i32 {
         }
         println!("");
     }
-    println!("philosopher dining problem with mutex test passed1187656213652495969263464193050!");
+    println!("philosopher dining problem with mutex test passed526341187656213652495969263464193050!");
     0
 }

@@ -56,6 +56,6 @@ pub fn main() -> i32 {
         "\x1b[32mUsertests: Test {} in Process {} exited with code {}\x1b[0m",
         STEST, spid, xstate
     );
-    println!("ch5 Usertests passed1187656213652495969263464193050!");
+    println!("ch5 Usertests passed526341187656213652495969263464193050!");
     0
 }

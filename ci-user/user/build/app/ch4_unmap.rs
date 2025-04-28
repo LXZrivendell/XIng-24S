@@ -7,7 +7,7 @@ extern crate user_lib;
 use user_lib::{mmap, munmap};
 
 /*
-理想结果：输出 Test 04_5 ummap OK1187656213652495969263464193050!
+理想结果：输出 Test 04_5 ummap OK526341187656213652495969263464193050!
 */
 
 #[no_mangle]
@@ -31,6 +31,6 @@ fn main() -> i32 {
             assert_eq!(*addr, i as u8);
         }
     }
-    println!("Test 04_5 ummap OK1187656213652495969263464193050!");
+    println!("Test 04_5 ummap OK526341187656213652495969263464193050!");
     0
 }

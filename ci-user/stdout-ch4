@@ -41,9 +41,62 @@ power_3 [50000/200000]
 power_3 [60000/200000]
 power_3 [70000/200000]
 power_3 [80000/200000]
+power_3 [90000/200000]
+power_3 [100000/200000]
+power_3 [110000/200000]
+power_3 [120000/200000]
+power_3 [130000/200000]
+power_3 [140000/200000]
+power_3 [150000/200000]
+power_3 [160000/200000]
+power_3 [170000/200000]
+power_3 [180000/200000]
+power_3 [190000/200000]
+power_3 [200000/200000]
+3^200000 = 871008973(MOD 998244353)
+Test power_3 OK526341187656213652495969263464193050!
 power_5 [10000/140000]
 power_5 [20000/140000]
 power_5 [30000/140000]
+power_7 [10000/160000]
+power_7 [20000/160000]
+power_7 [30000/160000]
+power_7 [40000/160000]
+power_7 [50000/160000]
+power_7 [60000/160000]
+power_7 [70000/160000]
+power_7 [80000/160000]
+power_7 [90000/160000]
+power_7 [100000/160000]
+power_7 [110000/160000]
+power_7 [120000/160000]
+power_7 [130000/160000]
+power_7 [140000/160000]
+power_7 [150000/160000]
+power_7 [160000/160000]
+7^160000 = 667897727(MOD 998244353)
+Test power_7 OK526341187656213652495969263464193050!
+get_time OK526341187656213652495969263464193050! 67
+AAAAAAAAAA [1/5]
+BBBBBBBBBB [1/5]
+CCCCCCCCCC [1/5]
+Test 04_1 OK526341187656213652495969263464193050!
+[kernel] PageFault in application, bad addr = 0x10000000, bad instruction = 0x436, kernel killed it.
+[kernel] PageFault in application, bad addr = 0x10000000, bad instruction = 0x434, kernel killed it.
+Test 04_4 test OK526341187656213652495969263464193050!
+Test 04_5 ummap OK526341187656213652495969263464193050!
+Test 04_6 ummap2 OK526341187656213652495969263464193050!
+Test sbrk start.
+origin break point = c000
+one page allocated,  break point = d000
+try write to allocated page
+write ok
+10 page allocated,  break point = 17000
+11 page DEALLOCATED,  break point = c000
+try DEALLOCATED more one page, should be failed.
+Test sbrk almost OK526341187656213652495969263464193050!
+now write to deallocated page, should cause page fault.
+[kernel] PageFault in application, bad addr = 0xc000, bad instruction = 0x5c8, kernel killed it.
 power_5 [40000/140000]
 power_5 [50000/140000]
 power_5 [60000/140000]
@@ -56,64 +109,11 @@ power_5 [120000/140000]
 power_5 [130000/140000]
 power_5 [140000/140000]
 5^140000 = 386471875(MOD 998244353)
-Test power_5 OK1187656213652495969263464193050!
-power_7 [10000/160000]
-power_7 [20000/160000]
-power_7 [30000/160000]
-power_7 [40000/160000]
-power_7 [50000/160000]
-power_7 [60000/160000]
-power_7 [70000/160000]
-power_7 [80000/160000]
-power_7 [90000/160000]
-get_time OK1187656213652495969263464193050! 53
-current time_msec = 54
-AAAAAAAAAA [1/5]
-BBBBBBBBBB [1/5]
-CCCCCCCCCC [1/5]
-Test 04_1 OK1187656213652495969263464193050!
-[kernel] PageFault in application, bad addr = 0x10000000, bad instruction = 0x436, kernel killed it.
-[kernel] PageFault in application, bad addr = 0x10000000, bad instruction = 0x434, kernel killed it.
-Test 04_5 ummap OK1187656213652495969263464193050!
-Test 04_6 ummap2 OK1187656213652495969263464193050!
-Test sbrk start.
-origin break point = c000
-one page allocated,  break point = d000
-try write to allocated page
-write ok
-10 page allocated,  break point = 17000
-11 page DEALLOCATED,  break point = c000
-try DEALLOCATED more one page, should be failed.
-Test sbrk almost OK1187656213652495969263464193050!
-now write to deallocated page, should cause page fault.
-[kernel] PageFault in application, bad addr = 0xc000, bad instruction = 0x5c8, kernel killed it.
-power_3 [90000/200000]
-power_3 [100000/200000]
-power_3 [110000/200000]
-power_3 [120000/200000]
-power_3 [130000/200000]
-power_3 [140000/200000]
-power_3 [150000/200000]
-power_7 [100000/160000]
-power_7 [110000/160000]
-power_7 [120000/160000]
-power_7 [130000/160000]
-power_7 [140000/160000]
-power_7 [150000/160000]
-power_7 [160000/160000]
-7^160000 = 667897727(MOD 998244353)
-Test power_7 OK1187656213652495969263464193050!
+Test power_5 OK526341187656213652495969263464193050!
+current time_msec = 69
 AAAAAAAAAA [2/5]
 BBBBBBBBBB [2/5]
 CCCCCCCCCC [2/5]
-Test 04_4 test OK1187656213652495969263464193050!
-power_3 [160000/200000]
-power_3 [170000/200000]
-power_3 [180000/200000]
-power_3 [190000/200000]
-power_3 [200000/200000]
-3^200000 = 871008973(MOD 998244353)
-Test power_3 OK1187656213652495969263464193050!
 AAAAAAAAAA [3/5]
 BBBBBBBBBB [3/5]
 CCCCCCCCCC [3/5]
@@ -123,13 +123,13 @@ CCCCCCCCCC [4/5]
 AAAAAAAAAA [5/5]
 BBBBBBBBBB [5/5]
 CCCCCCCCCC [5/5]
-Test write A OK1187656213652495969263464193050!
-Test write B OK1187656213652495969263464193050!
-Test write C OK1187656213652495969263464193050!
-time_msec = 155 after sleeping 100 ticks, delta = 101ms!
-Test sleep1 passed1187656213652495969263464193050!
-[kernel] sys_task_info: time = 0 us, syscall_times[169] = 11125
+Test write A OK526341187656213652495969263464193050!
+Test write B OK526341187656213652495969263464193050!
+Test write C OK526341187656213652495969263464193050!
+time_msec = 191 after sleeping 100 ticks, delta = 122ms!
+Test sleep1 passed526341187656213652495969263464193050!
+[kernel] sys_task_info: time = 0 us, syscall_times[169] = 7647
 Panicked at src/bin/ch3_taskinfo.rs:26, assertion failed: t2 - t1 <= info.time + 1
-Test sleep OK1187656213652495969263464193050!
+Test sleep OK526341187656213652495969263464193050!
 [kernel] Panicked at src/task/mod.rs:184 All applications completed!
 make[1]: Leaving directory '/home/xing/XIng-24S/os'

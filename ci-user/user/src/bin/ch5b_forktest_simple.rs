@@ -9,7 +9,7 @@ use user_lib::{fork, getpid, wait};
 #[no_mangle]
 pub fn main() -> i32 {
     assert_eq!(wait(&mut 0i32), -1);
-    println!("sys_wait without child process test passed1187656213652495969263464193050!");
+    println!("sys_wait without child process test passed526341187656213652495969263464193050!");
     println!("parent start, pid = {}!", getpid());
     let pid = fork();
     if pid == 0 {

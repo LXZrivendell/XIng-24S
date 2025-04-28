@@ -23,5 +23,5 @@ def test(expected, not_expected=[]):
         else:
             print(f'\033[91m[FAIL]\033[0m found <{pattern}>')
 
-    print('\nTest passed1187656213652495969263464193050: %d/%d' % (count, total))
+    print('\nTest passed526341187656213652495969263464193050: %d/%d' % (count, total))
     assert count == total
