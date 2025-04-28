@@ -13,10 +13,8 @@ mod context;
 mod switch;
 #[allow(clippy::module_inception)]
 mod task;
-
 use crate::config::MAX_SYSCALL_NUM;
 use crate::loader::{get_app_data, get_num_app};
-use crate::mm::{VirtPageNum, PageTableEntry, VirtAddr, MapPermission, VPNRange};
 use crate::sync::UPSafeCell;
 use crate::trap::TrapContext;
 use alloc::vec::Vec;
@@ -25,7 +23,6 @@ use switch::__switch;
 pub use task::{TaskControlBlock, TaskStatus};
 
 pub use context::TaskContext;
-pub use crate::timer::{get_time_ms, get_time_us};
 
 /// The task manager, where all the tasks are managed.
 ///
@@ -49,23 +46,7 @@ struct TaskManagerInner {
     tasks: Vec<TaskControlBlock>,
     /// id of current `Running` task
     current_task: usize,
-    /// the number of tasks that have not exit
-    //alive_task_num: usize,
-    /// record time point
-    checkpoint: usize,
 }
-
-
-/// ch3-pro2
-impl TaskManagerInner {
-    /// update checkpoint and return the diff time
-    fn update_checkpoint(&mut self) -> usize {
-        let prev_point = self.checkpoint;
-        self.checkpoint = get_time_ms();
-        return self.checkpoint - prev_point;
-    }
-}
-
 
 lazy_static! {
     /// a `TaskManager` global instance through lazy_static!
@@ -83,8 +64,6 @@ lazy_static! {
                 UPSafeCell::new(TaskManagerInner {
                     tasks,
                     current_task: 0,
-                    //alive_task_num: num_app,
-                    checkpoint: 0,
                 })
             },
         }
@@ -92,16 +71,6 @@ lazy_static! {
 }
 
 impl TaskManager {
-
-
-    /// ch3, record syscall times
-    fn record_syscall_times(&self, syscall_id: usize) {
-        let mut inner = self.inner.exclusive_access();
-        let current = inner.current_task;
-        inner.tasks[current].syscall_times[syscall_id] += 1;
-    }
-
-
     /// Run the first task in task list.
     ///
     /// Generally, the first task in task list is an idle task (we call it zero process later).
@@ -119,6 +88,39 @@ impl TaskManager {
         }
         panic!("unreachable in run_first_task!");
     }
+
+        /// 在每次系统调用入口处自增当前任务的 syscall 计数
+        pub fn increase_sys_call(&self, syscall_id: usize) {
+            if syscall_id < MAX_SYSCALL_NUM {
+                let mut inner = self.inner.exclusive_access();
+                let cur = inner.current_task;
+                inner.tasks[cur].sys_call_times[syscall_id] =
+                    inner.tasks[cur].sys_call_times[syscall_id].wrapping_add(1);
+            }
+        }
+    /// 获取当前任务的所有 syscall 计数（按 ID 分桶）
+    pub fn get_sys_call_times(&self) -> [u32; MAX_SYSCALL_NUM] {
+        let inner = self.inner.exclusive_access();
+        inner.tasks[inner.current_task].sys_call_times
+    }
+
+    /// sys_mmap 的后台实现
+    pub fn mmap(&self, start: usize, len: usize, port: usize) -> isize {
+            let mut inner = self.inner.exclusive_access();
+            let cur = inner.current_task;
+            inner.tasks[cur]
+                .memory_set
+                .mmap(start, len, port)
+        }
+    
+        /// sys_munmap 的后台实现
+        pub fn munmap(&self, start: usize, len: usize) -> isize {
+            let mut inner = self.inner.exclusive_access();
+            let cur = inner.current_task;
+            inner.tasks[cur]
+                .memory_set
+                .munmap(start, len)
+        }
 
     /// Change the status of current `Running` task into `Ready`.
     fn mark_current_suspended(&self) {
@@ -184,23 +186,6 @@ impl TaskManager {
             panic!("All applications completed!");
         }
     }
-
-      //* ch3-pro2 start
-    /// record the kernel time, now start to record the user time
-    pub fn user_time_start(&self) {
-        let mut inner = self.inner.exclusive_access();
-        let current = inner.current_task;
-        inner.tasks[current].kernel_time += inner.update_checkpoint();
-    }
-
-    /// record the user time, now start to record the kernel time
-    pub fn user_time_end(&self) {
-        let mut inner = self.inner.exclusive_access();
-        let current = inner.current_task;
-        inner.tasks[current].user_time += inner.update_checkpoint();
-    }
-    //* ch3-pro2 end
-
 }
 
 /// Run the first task in task list.
@@ -236,6 +221,16 @@ pub fn exit_current_and_run_next() {
     run_next_task();
 }
 
+/// 在 syscall 里调用
+pub fn sys_mmap(start: usize, len: usize, port: usize) -> isize {
+        TASK_MANAGER.mmap(start, len, port)
+}
+
+/// 在 syscall 里调用
+pub fn sys_munmap(start: usize, len: usize) -> isize {
+        TASK_MANAGER.munmap(start, len)
+    }
+
 /// Get the current 'Running' task's token.
 pub fn current_user_token() -> usize {
     TASK_MANAGER.get_current_token()
@@ -249,81 +244,4 @@ pub fn current_trap_cx() -> &'static mut TrapContext {
 /// Change the current 'Running' task's program break
 pub fn change_program_brk(size: i32) -> Option<usize> {
     TASK_MANAGER.change_current_program_brk(size)
-}
-
-
-///* ch3-pro2
-pub fn user_time_start() {
-    TASK_MANAGER.user_time_start();
-}
-///
-pub fn user_time_end() {
-    TASK_MANAGER.user_time_end();
-}
-
-//* ch3,4-lab
-// TaskControlBlock in chapter4 contains 'MemorySet' and other fields
-// which cannot derive 'Clone' and 'Copy' traits. Therefore, we need to
-/// split the variables into separate parts
-pub fn get_current_task_status() -> TaskStatus {
-    let inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    inner.tasks.get(current).unwrap().task_status
-}
-///
-pub fn get_current_task_time_cost() -> usize {
-    let inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    let task_block = inner.tasks.get(current).unwrap();
-    (task_block.kernel_time + task_block.user_time) * 1000 // ms -> us
-}
-///
-pub fn get_current_task_syscall_times() -> [u32; MAX_SYSCALL_NUM] {
-    let inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    inner.tasks.get(current).unwrap().syscall_times
-}
-///
-pub fn update_task_syscall_times(syscall_id: usize) {
-    let mut inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    inner.tasks[current].syscall_times[syscall_id] += 1;
-}
-
-///* ch4-lab2, mmap, munmap
-pub fn get_current_task_page_table(vpn: VirtPageNum) -> Option<PageTableEntry> {
-    let inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    inner.tasks[current].memory_set.translate(vpn)
-}
-///
-pub fn create_new_map_area(start_va: VirtAddr, end_va: VirtAddr, perm: MapPermission) {
-    let mut inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    inner.tasks[current].memory_set.insert_framed_area(start_va, end_va, perm);
-}
-///
-pub fn unmap_consecutive_area(start: usize, len: usize) -> isize {
-    let mut inner = TASK_MANAGER.inner.exclusive_access();
-    let current = inner.current_task;
-    let start_vpn = VirtAddr::from(start).floor();
-    let end_vpn = VirtAddr::from(start + len).ceil();
-    let vpns = VPNRange::new(start_vpn, end_vpn);
-    for vpn in vpns {
-        if let Some(pte) = inner.tasks[current].memory_set.translate(vpn) {
-            if !pte.is_valid() {
-                return -1;
-            }
-            inner.tasks[current].memory_set.get_page_table().unmap(vpn);
-        } else {
-            // Also unmapped if no PTE found
-            return -1;
-        }
-    }
-    0
-}
-
-/// Record the syscall times of the current 'Running' task.
-pub fn record_syscall_times(syscall_id: usize) {
-    TASK_MANAGER.record_syscall_times(syscall_id);
 }

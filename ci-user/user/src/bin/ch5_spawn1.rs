@@ -10,8 +10,8 @@ use user_lib::{spawn, wait, waitpid};
 
 /// 理想输出：
 /// new child i
-/// Test wait OK526341187656213652495969263464193050!
-/// Test waitpid OK526341187656213652495969263464193050!
+/// Test wait OK55600526341187656213652495969263464193050!
+/// Test waitpid OK55600526341187656213652495969263464193050!
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -22,7 +22,7 @@ pub fn main() -> i32 {
     let exit_pid = wait(&mut exit_code);
     assert_eq!(exit_pid, cpid, "error exit pid");
     assert_eq!(exit_code, 66778, "error exit code");
-    println!("Test wait OK526341187656213652495969263464193050!");
+    println!("Test wait OK55600526341187656213652495969263464193050!");
     let (cpid0, cpid1) = (spawn("ch5_exit0\0"), spawn("ch5_exit1\0"));
     let exit_pid = waitpid(cpid1 as usize, &mut exit_code);
     assert_eq!(exit_pid, cpid1, "error exit pid");
@@ -30,6 +30,6 @@ pub fn main() -> i32 {
     let exit_pid = wait(&mut exit_code);
     assert_eq!(exit_pid, cpid0, "error exit pid");
     assert_eq!(exit_code, 66778, "error exit code");
-    println!("Test waitpid OK526341187656213652495969263464193050!");
+    println!("Test waitpid OK55600526341187656213652495969263464193050!");
     0
 }

@@ -1,5 +1,4 @@
 //! Implementation of [`MapArea`] and [`MemorySet`].
-use core::borrow::BorrowMut;
 
 use super::{frame_alloc, FrameTracker};
 use super::{PTEFlags, PageTable, PageTableEntry};
@@ -38,6 +37,7 @@ lazy_static! {
 pub struct MemorySet {
     page_table: PageTable,
     areas: Vec<MapArea>,
+    map_tree: BTreeMap<VirtPageNum, FrameTracker>,
 }
 
 impl MemorySet {
@@ -46,6 +46,7 @@ impl MemorySet {
         Self {
             page_table: PageTable::new(),
             areas: Vec::new(),
+            map_tree: BTreeMap::new(),
         }
     }
     /// Get the page table token
@@ -222,6 +223,66 @@ impl MemorySet {
             elf.header.pt2.entry_point() as usize,
         )
     }
+
+       /// Anonymous mmap: [start, start+len) pages, with prot bits in `port` (bit0=R,1=W,2=X)
+    pub fn mmap(&mut self, start: usize, len: usize, port: usize) -> isize {
+
+            // 1) 参数合法性检查
+            if start % PAGE_SIZE != 0          { return -1; }
+            if port & !0x7 != 0                { return -1; }
+            if port & 0x7 == 0                 { return -1; }
+            // 2) 计算 VPN 范围
+            let va_start: VirtPageNum = VirtAddr(start).floor();
+            let va_end:   VirtPageNum = VirtAddr(start + len).ceil();
+            // 3) 构造 PTE 标志
+            let mut flags = PTEFlags::empty();
+            if port & 0b001 != 0 { flags |= PTEFlags::R }
+            if port & 0b010 != 0 { flags |= PTEFlags::W }
+            if port & 0b100 != 0 { flags |= PTEFlags::X }
+            flags |= PTEFlags::U | PTEFlags::V;
+            // 4) 遍历每一页
+            let mut vpn = va_start;
+            while vpn != va_end {
+                // 4.1 检查是否已映射
+                if let Some(pte) = self.page_table.translate(vpn) {
+                    if pte.is_valid() { return -1; }
+                }
+                // 4.2 分配物理页
+                let frame = match frame_alloc() {
+                    Some(f) => f,
+                    None    => return -1,
+                };
+                // 4.3 建立映射并记录 FrameTracker
+                self.page_table.map(vpn, frame.ppn, flags);
+                self.map_tree.insert(vpn, frame);
+                vpn.step();
+            }
+            0
+        }
+    
+        /// Anonymous munmap: 取消 [start, start+len) 的映射
+        pub fn munmap(&mut self, start: usize, len: usize) -> isize {
+
+            if start % PAGE_SIZE != 0 { return -1; }
+            let va_start: VirtPageNum = VirtAddr(start).floor();
+            let va_end:   VirtPageNum = VirtAddr(start + len).ceil();
+            let mut vpn = va_start;
+            while vpn != va_end {
+                // 取消页表映射
+                match self.page_table.translate(vpn) {
+                    Some(pte) if pte.is_valid() => {},
+                    _                           => return -1,
+                }
+                self.page_table.unmap(vpn);
+                // 删除并释放对应的 FrameTracker
+                if self.map_tree.remove(&vpn).is_none() {
+                    return -1;
+                }
+                vpn.step();
+            }
+            0
+        }
+
     /// Change page table by writing satp CSR Register.
     pub fn activate(&self) {
         let satp = self.page_table.token();
@@ -247,12 +308,6 @@ impl MemorySet {
         } else {
             false
         }
-    }
-    
-    /// 
-    #[allow(unused)]
-    pub fn get_page_table(&mut self) -> &mut PageTable {
-        self.page_table.borrow_mut()
     }
 
     /// append the area to new_end
