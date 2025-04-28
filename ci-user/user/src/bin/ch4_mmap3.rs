@@ -7,7 +7,7 @@ extern crate user_lib;
 use user_lib::mmap;
 
 /*
-理想结果：对于错误的 mmap 返回 -1，最终输出 Test 04_4 test OK2852733355531910260!
+理想结果：对于错误的 mmap 返回 -1，最终输出 Test 04_4 test OK84082852733355531910260!
 */
 
 #[no_mangle]
@@ -20,6 +20,6 @@ fn main() -> i32 {
     assert_eq!(mmap(start + len + 1, len, prot), -1);
     assert_eq!(mmap(start + len, len, 0), -1);
     assert_eq!(mmap(start + len, len, prot | 8), -1);
-    println!("Test 04_4 test OK2852733355531910260!");
+    println!("Test 04_4 test OK84082852733355531910260!");
     0
 }

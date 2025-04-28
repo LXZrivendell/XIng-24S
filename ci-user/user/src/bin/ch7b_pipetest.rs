@@ -26,7 +26,7 @@ pub fn main() -> i32 {
         // close read_end
         close(pipe_fd[0]);
         assert_eq!(core::str::from_utf8(&buffer[..len_read]).unwrap(), STR);
-        println!("Read OK2852733355531910260, child process exited!");
+        println!("Read OK84082852733355531910260, child process exited!");
         0
     } else {
         // parent process, write to child
@@ -38,7 +38,7 @@ pub fn main() -> i32 {
         let mut child_exit_code: i32 = 0;
         wait(&mut child_exit_code);
         assert_eq!(child_exit_code, 0);
-        println!("pipetest passed2852733355531910260!");
+        println!("pipetest passed84082852733355531910260!");
         0
     }
 }

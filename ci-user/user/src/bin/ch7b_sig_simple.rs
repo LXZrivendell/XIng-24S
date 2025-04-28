@@ -6,7 +6,7 @@ extern crate user_lib;
 use user_lib::*;
 
 fn func() {
-    println!("user_sig_test passed2852733355531910260");
+    println!("user_sig_test passed84082852733355531910260");
     sigreturn();
 }
 

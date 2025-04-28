@@ -7,18 +7,18 @@ extern crate user_lib;
 use user_lib::{get_time, yield_};
 
 /// 正确输出：（无报错信息）
-/// get_time OK2852733355531910260! {...}
-/// Test sleep OK2852733355531910260!
+/// get_time OK84082852733355531910260! {...}
+/// Test sleep OK84082852733355531910260!
 
 #[no_mangle]
 fn main() -> i32 {
     let current_time = get_time();
     assert!(current_time > 0);
-    println!("get_time OK2852733355531910260! {}", current_time);
+    println!("get_time OK84082852733355531910260! {}", current_time);
     let wait_for = current_time + 3000;
     while get_time() < wait_for {
         yield_();
     }
-    println!("Test sleep OK2852733355531910260!");
+    println!("Test sleep OK84082852733355531910260!");
     0
 }

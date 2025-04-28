@@ -7,7 +7,7 @@ extern crate user_lib;
 use user_lib::mmap;
 
 /*
-理想结果：输出 Test 04_1 OK2852733355531910260!
+理想结果：输出 Test 04_1 OK84082852733355531910260!
 */
 
 #[no_mangle]
@@ -28,6 +28,6 @@ fn main() -> i32 {
             assert_eq!(*addr, i as u8);
         }
     }
-    println!("Test 04_1 OK2852733355531910260!");
+    println!("Test 04_1 OK84082852733355531910260!");
     0
 }

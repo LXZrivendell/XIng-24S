@@ -17,6 +17,6 @@ pub fn main() -> i32 {
     assert_eq!(mutex_lock(mid), 0);
     assert_eq!(mutex_lock(mid), -0xdead);
     mutex_unlock(mid);
-    println!("deadlock test mutex 1 OK2852733355531910260!");
+    println!("deadlock test mutex 1 OK84082852733355531910260!");
     0
 }

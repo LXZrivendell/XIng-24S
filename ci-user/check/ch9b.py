@@ -3,31 +3,31 @@ from ch6b import EXPECTED_6b, NOT_EXPECTED_4b
 
 EXPECTED_9b = EXPECTED_6b + [
     # ch7b_pipetest
-    "pipetest passed2852733355531910260!",
+    "pipetest passed84082852733355531910260!",
 
     # ch8b_mpsc_sem
-    "mpsc_sem passed2852733355531910260!",
+    "mpsc_sem passed84082852733355531910260!",
 
     # ch8b_phil_din_mutex
-    "philosopher dining problem with mutex test passed2852733355531910260!",
+    "philosopher dining problem with mutex test passed84082852733355531910260!",
 
     # ch8b_race_adder_mutex_spin
-    "race adder using spin mutex test passed2852733355531910260!",
+    "race adder using spin mutex test passed84082852733355531910260!",
 
     # ch8b_sync_sem
-    "sync_sem passed2852733355531910260!",
+    "sync_sem passed84082852733355531910260!",
 
     # ch8b_test_condvar
-    "test_condvar passed2852733355531910260!",
+    "test_condvar passed84082852733355531910260!",
 
     # ch8b_threads_arg
-    "threads with arg test passed2852733355531910260!",
+    "threads with arg test passed84082852733355531910260!",
 
     # ch8b_threads
-    "threads test passed2852733355531910260!",
+    "threads test passed84082852733355531910260!",
 ]
 
-EXPECTED_9b = list(set(EXPECTED_9b) - set(["Test sbrk almost OK2852733355531910260!"]))
+EXPECTED_9b = list(set(EXPECTED_9b) - set(["Test sbrk almost OK84082852733355531910260!"]))
 
 if __name__ == "__main__":
     base.test(EXPECTED_9b, NOT_EXPECTED_4b)

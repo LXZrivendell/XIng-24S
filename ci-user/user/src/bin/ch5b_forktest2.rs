@@ -18,7 +18,7 @@ pub fn main() -> i32 {
                 (current_time as i32 as isize) * (current_time as i32 as isize) % 1000 + 1000;
             println!("pid {} sleep for {} ms", getpid(), sleep_length);
             sleep(sleep_length as usize);
-            println!("pid {} OK2852733355531910260!", getpid());
+            println!("pid {} OK84082852733355531910260!", getpid());
             exit(0);
         }
     }
@@ -29,6 +29,6 @@ pub fn main() -> i32 {
         assert_eq!(exit_code, 0);
     }
     assert!(wait(&mut exit_code) < 0);
-    println!("forktest2 test passed2852733355531910260!");
+    println!("forktest2 test passed84082852733355531910260!");
     0
 }

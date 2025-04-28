@@ -97,6 +97,6 @@ pub fn main() -> i32 {
         }
     }
     assert!(failed > 0);
-    println!("deadlock test semaphore 1 OK2852733355531910260!");
+    println!("deadlock test semaphore 1 OK84082852733355531910260!");
     0
 }

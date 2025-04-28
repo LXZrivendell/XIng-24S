@@ -65,7 +65,7 @@ pub fn main() -> i32 {
         );
         let mut _unused: i32 = 0;
         wait(&mut _unused);
-        println!("pipe_large_test passed2852733355531910260!");
+        println!("pipe_large_test passed84082852733355531910260!");
         0
     }
 }

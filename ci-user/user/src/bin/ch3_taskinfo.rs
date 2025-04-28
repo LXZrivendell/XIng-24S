@@ -41,6 +41,6 @@ pub fn main() -> usize {
     assert!(info.time < t5 - t1 + 100);
     assert!(info.status == TaskStatus::Running);
 
-    println!("Test task info OK2852733355531910260!");
+    println!("Test task info OK84082852733355531910260!");
     0
 }

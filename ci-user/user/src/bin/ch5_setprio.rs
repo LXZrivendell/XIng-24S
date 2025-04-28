@@ -6,7 +6,7 @@ extern crate user_lib;
 use user_lib::set_priority;
 
 /// 正确输出：（无报错信息）
-/// Test set_priority OK2852733355531910260!
+/// Test set_priority OK84082852733355531910260!
 
 #[no_mangle]
 pub fn main() -> i32 {
@@ -15,6 +15,6 @@ pub fn main() -> i32 {
     assert_eq!(set_priority(0), -1);
     assert_eq!(set_priority(1), -1);
     assert_eq!(set_priority(-10), -1);
-    println!("Test set_priority OK2852733355531910260!");
+    println!("Test set_priority OK84082852733355531910260!");
     0
 }
